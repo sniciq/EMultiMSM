@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">短信群发</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="title_activity_contract">联系人选择</string>
+    <string name="contract">选择联系人</string>
+    <string name="hello">请输入手机号:</string>
+    <string name="content">请输入信息内容：</string>
+    <string name="send">发送</string>
+    <string name="title_activity_display_message">DisplayMessageActivity</string>
+    <string name="ok">确定</string>
+</resources>

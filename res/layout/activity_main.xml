@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".MainActivity" >
+	<Button 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contract"
+        android:id="@+id/contract"
+        android:onClick="getContract"
+        />
+    <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello"
+    />
+    
+    <EditText 
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/mobile"
+        />
+    
+    <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/content"
+    />
+    
+    <EditText 
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:minLines="3"
+         android:id="@+id/message"
+        />
+    
+    <Button 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send"
+        android:id="@+id/send"
+        android:onClick="sendMessage"
+        />	
+</LinearLayout>
