@@ -1,18 +1,17 @@
 package com.eddy.emultimsm;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,8 +19,9 @@ public class CheckboxAdapter extends BaseAdapter {
 	
 	Context context;
 	List<Map<String, Object>> listData;
+	
 	//记录checkbox的状态  
-	HashMap<Integer, Boolean> state = new HashMap<Integer, Boolean>();
+	SparseBooleanArray state = new SparseBooleanArray();
 	
 	public CheckboxAdapter(Context context, List<Map<String, Object>> listData) {
 		this.context = context;
@@ -56,20 +56,25 @@ public class CheckboxAdapter extends BaseAdapter {
 		
 		image.setImageBitmap((Bitmap) listData.get(positionId).get("contactPhoto"));
 		
+		TextView userPY = (TextView) convertView.findViewById(R.id.userPY);
+		userPY.setText(listData.get(positionId).get("py").toString());
+		
+		boolean checked = (Boolean) listData.get(positionId).get("checked");
+		state.put(positionId, checked);
+		
 		CheckBox check = (CheckBox) convertView.findViewById(R.id.checked);
-		check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(isChecked) {
-					state.put(positionId, isChecked);
-				}
-				else {
-					state.remove(positionId);
-				}
-			}
-		});
-		check.setChecked((state.get(positionId) == null ? false : true));  
+		check.setChecked(state.get(positionId));  
 		return convertView;
 	}
 
+	public void toggleCheck(View convertView, int positionId) {
+		boolean checked = false;
+		if(state.get(positionId)) {
+			checked = state.get(positionId);
+		}
+		checked = !checked;
+		CheckBox check = (CheckBox) convertView.findViewById(R.id.checked);
+		check.setChecked(checked);
+		state.put(positionId, checked);
+	}
 }

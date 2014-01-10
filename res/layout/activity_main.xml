@@ -5,24 +5,24 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context=".MainActivity" >
-	<Button 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/contract"
-        android:id="@+id/contract"
-        android:onClick="getContract"
-        />
+	
     <TextView 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello"
+        android:text="@string/contacts"
     />
     
-    <EditText 
+    <ScrollView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        
+        <EditText 
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"
          android:id="@+id/mobile"
-        />
+         android:minLines="1"
+         android:inputType="textMultiLine"/>
+    </ScrollView>
     
     <TextView 
         android:layout_width="fill_parent"
@@ -30,18 +30,26 @@
         android:text="@string/content"
     />
     
-    <EditText 
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:minLines="3"
-         android:id="@+id/message"
-        />
+    <ScrollView 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip">
+        <EditText 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/message"
+            android:minLines="1"
+            android:inputType="textMultiLine"/>
+    </ScrollView>
     
     <Button 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
         android:text="@string/send"
         android:id="@+id/send"
+        android:drawableRight="@drawable/send"
+        style="?android:attr/borderlessButtonStyle"
         android:onClick="sendMessage"
         />	
 </LinearLayout>

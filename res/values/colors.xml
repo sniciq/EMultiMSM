@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="listitemfocus">#dd4b39</color>
+    <color name="listitempress">#DDDDDD</color>
+    <color name="listitemselect">#334b39</color>
+    
+</resources>

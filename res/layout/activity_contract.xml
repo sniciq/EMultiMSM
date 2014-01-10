@@ -5,20 +5,13 @@
     android:layout_height="fill_parent"
     tools:context=".ContractActivity" >
 
-    <ListView 
+    <ListView
         android:id="@+id/contractList"
-        android:layout_height="0dip"
         android:layout_width="fill_parent"
+        android:layout_height="0dip"
         android:layout_weight="1"
         android:drawSelectorOnTop="false"
-        ></ListView>
+        android:scrollbarStyle="outsideOverlay" >
+</ListView>
     
-    <Button 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ok"
-        android:id="@+id/selectContractBtn"
-        android:onClick="onSelectContract"
-        />	
-
 </LinearLayout>
