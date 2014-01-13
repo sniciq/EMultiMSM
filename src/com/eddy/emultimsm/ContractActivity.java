@@ -6,10 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -19,6 +18,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,14 +27,18 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts.Photo;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class ContractActivity extends Activity {
 
@@ -53,7 +57,8 @@ public class ContractActivity extends Activity {
 	private ListView mListView;
 	private CheckboxAdapter mAdapter;
 	private List<Map<String, Object>> mList;
-
+	private TextView overlay;
+	
 	private ProgressDialog progress;
 
 	private Handler handler;
@@ -65,10 +70,37 @@ public class ContractActivity extends Activity {
 		// 获取ListView对象
 		mListView = (ListView) findViewById(R.id.contractList);
 
+		overlay = (TextView) View.inflate(this, R.layout.overlay, null);
+		getWindowManager().addView(overlay, new WindowManager.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 
+				WindowManager.LayoutParams.TYPE_APPLICATION, 
+				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, 
+				PixelFormat.TRANSLUCENT)
+		);
+		
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> av, View view, int position, long id) {
 				mAdapter.toggleCheck(view, position);
+			}
+		});
+		
+		mListView.setOnScrollListener(new OnScrollListener() {
+			boolean visible;
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				visible = true;
+				if(scrollState != ListView.OnScrollListener.SCROLL_STATE_FLING) {
+					overlay.setVisibility(View.INVISIBLE);
+				}
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				if(visible) {
+					overlay.setText(mAdapter.listData.get(firstVisibleItem).get("py").toString());
+					overlay.setVisibility(View.VISIBLE);
+				}
 			}
 		});
 
@@ -108,7 +140,7 @@ public class ContractActivity extends Activity {
 		mList = new ArrayList<Map<String, Object>>();
 		Map<String, Object> mMap = null;
 
-		List<HashMap<String, Object>> contractList = fillMaps();
+		List<HashMap<String, Object>> contractList = getAllContacts();
 		Collections.sort(contractList, new Comparator<HashMap<String, Object>>() {
 			@Override
 			public int compare(HashMap<String, Object> h1, HashMap<String, Object> h2) {
@@ -133,7 +165,7 @@ public class ContractActivity extends Activity {
 		}
 	}
 
-	private List<HashMap<String, Object>> fillMaps() {
+	private List<HashMap<String, Object>> getAllContacts() {
 		List<HashMap<String, Object>> items = new ArrayList<HashMap<String, Object>>();
 		String[] PHONES_PROJECTION = new String[] { Phone.DISPLAY_NAME, Phone.NUMBER, Photo.PHOTO_ID, Phone.CONTACT_ID };
 		Cursor phoneCursor = null;
@@ -175,15 +207,7 @@ public class ContractActivity extends Activity {
 				i.put("name", contactName);
 				i.put("key", phoneNumber);
 				i.put("contactPhoto", contactPhoto);
-				i.put("py", contactName.charAt(0) + "");
-				Set<String> pset = PYUtil.getPinYin(contactName);
-				Iterator<String> itor = pset.iterator();
-				if(itor.hasNext()) {
-					String py = itor.next();
-					String fc = py.substring(0, 1).toUpperCase();
-					i.put("py", fc);
-				}
-				
+				i.put("py", PYUtil.getPinYinFirst(contactName).toUpperCase(Locale.ENGLISH));
 				items.add(i);
 			}
 		} finally {

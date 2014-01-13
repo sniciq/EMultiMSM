@@ -5,13 +5,14 @@ import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,6 +65,14 @@ public class CheckboxAdapter extends BaseAdapter {
 		
 		CheckBox check = (CheckBox) convertView.findViewById(R.id.checked);
 		check.setChecked(state.get(positionId));  
+		
+		check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				state.put(positionId, isChecked);
+			}
+		});
+		
 		return convertView;
 	}
 

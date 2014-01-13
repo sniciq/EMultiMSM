@@ -57,4 +57,30 @@ public class PYUtil {
 		
 		return retSet;
 	}
+	
+	/**
+	 * 得到首字符对应的拼音
+	 * @param src
+	 * @return
+	 */
+	public static String getPinYinFirst(String src) {
+		HanyuPinyinOutputFormat outputFormat = new HanyuPinyinOutputFormat();
+		outputFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+		outputFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+		outputFormat.setVCharType(HanyuPinyinVCharType.WITH_V);
+
+		try {
+			String[] pinYins = PinyinHelper.toHanyuPinyinStringArray(src.charAt(0), outputFormat);
+			if (pinYins == null || pinYins.length == 0) {
+				pinYins = new String[1];
+				return src.charAt(0)+"";
+			}
+			else {
+				return pinYins[0].charAt(0)+"";
+			}
+		} catch (BadHanyuPinyinOutputFormatCombination e) {
+		}
+		
+		return "";
+	}
 }
