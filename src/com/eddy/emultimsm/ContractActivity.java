@@ -90,8 +90,9 @@ public class ContractActivity extends Activity {
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				visible = true;
-				if(scrollState != ListView.OnScrollListener.SCROLL_STATE_FLING) {
+				if(scrollState == ListView.OnScrollListener.SCROLL_STATE_IDLE) {
 					overlay.setVisibility(View.INVISIBLE);
+					visible = false;
 				}
 			}
 			
@@ -100,6 +101,9 @@ public class ContractActivity extends Activity {
 				if(visible) {
 					overlay.setText(mAdapter.listData.get(firstVisibleItem).get("py").toString());
 					overlay.setVisibility(View.VISIBLE);
+				}
+				else {
+					overlay.setVisibility(View.INVISIBLE);
 				}
 			}
 		});
