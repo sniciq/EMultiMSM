@@ -12,6 +12,7 @@
         android:layout_weight="1"
         android:drawSelectorOnTop="false"
         android:fastScrollEnabled="true"
+        android:fastScrollAlwaysVisible="true"
         android:scrollbarStyle="outsideOverlay" >
 </ListView>
     

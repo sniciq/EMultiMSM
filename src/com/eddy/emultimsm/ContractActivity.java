@@ -128,6 +128,8 @@ public class ContractActivity extends Activity {
 			}
 		}.start();
 	}
+	
+	
 
 	private void loadContact(String preNumbers) {
 		String[] initNumbers = null;
@@ -257,7 +259,18 @@ public class ContractActivity extends Activity {
 		extras.putString("selectContact", checkedContract);
 		data.putExtras(extras);
 		setResult(RESULT_OK, data);
+		
 		finish();
 	}
 
+
+
+	@Override
+	protected void onPause() {
+		getWindowManager().removeView(overlay);
+		progress.dismiss();
+		super.onPause();
+	}
+	
+	
 }
