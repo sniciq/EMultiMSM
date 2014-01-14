@@ -3,7 +3,11 @@ package com.eddy.emultimsm;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -77,20 +81,35 @@ public class MainActivity extends Activity {
 	}
     
     public void sendMessage(View view) {
-		progress = ProgressDialog.show(this, "提示", "正在发送信息", true);
-		
-		sendBtn.setEnabled(false);
-		new Thread() {  
-			public void run() {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				doSendMessage();
-				handler.sendEmptyMessage(0);
+    	AlertDialog.Builder build = new Builder(this);
+		build.setTitle(getResources().getString(R.string.send_confirm_title));
+		build.setMessage(getResources().getString(R.string.send_confirm_msg));
+		build.setPositiveButton(getResources().getString(R.string.confirm_ok), new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				progress = ProgressDialog.show(MainActivity.this, "提示", "正在发送信息", true);
+				
+				sendBtn.setEnabled(false);
+				new Thread() {  
+					public void run() {
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						doSendMessage();
+						handler.sendEmptyMessage(0);
+					}
+				}.start();
 			}
-		}.start();
+		});
+		build.setNegativeButton(getResources().getString(R.string.confirm_cancel), new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		build.create().show();
     }
     
     private void doSendMessage() {

@@ -11,9 +11,15 @@
     <string name="title_activity_contract">联系人选择</string>
     <string name="contract">选择联系人</string>
     <string name="hello">请输入手机号:</string>
-    <string name="contacts">联系人(可直接输入手机号)</string>
+    <string name="contacts">联系人[可直接输入逗号分隔的手机号]</string>
     <string name="content">请输入信息内容：</string>
     <string name="send">发送</string>
     <string name="title_activity_display_message">DisplayMessageActivity</string>
     <string name="ok">确定</string>
+    
+    <string name="send_confirm_title">提示</string>
+    <string name="send_confirm_msg">确定发送?</string>
+    <string name="confirm_ok">确定</string>
+    <string name="confirm_cancel">取消</string>
+    
 </resources>

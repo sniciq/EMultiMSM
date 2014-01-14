@@ -40,19 +40,20 @@
         android:layout_width="60dip" 
         android:gravity="center_vertical"
         android:paddingLeft="8dp"> 
+        
+        <CheckBox  
+	        android:id="@+id/checked"  
+	        android:layout_height="wrap_content"  
+	        android:layout_width="wrap_content" 
+	        android:checked="false"  
+	        android:focusable="false" />
+        
         <TextView 
 	       	 android:id="@+id/userPY"
 	         android:layout_height="wrap_content"
 	         android:textSize="20sp"
 	         android:layout_width="wrap_content" 
 	        />
-	    
-	    <CheckBox  
-	        android:id="@+id/checked"  
-	        android:layout_height="wrap_content"  
-	        android:layout_width="wrap_content" 
-	        android:checked="false"  
-	        android:focusable="false" />
     </LinearLayout>
     
 </LinearLayout>

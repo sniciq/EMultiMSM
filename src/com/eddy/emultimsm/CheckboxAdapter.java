@@ -27,6 +27,11 @@ public class CheckboxAdapter extends BaseAdapter {
 	public CheckboxAdapter(Context context, List<Map<String, Object>> listData) {
 		this.context = context;
 		this.listData = listData;
+		for(int i = 0; i < listData.size(); i++) {
+			Map<String, Object> item = listData.get(i);
+			boolean checked = (Boolean) item.get("checked");
+			state.put(i, checked);
+		}
 	}
 
 	@Override
@@ -59,9 +64,6 @@ public class CheckboxAdapter extends BaseAdapter {
 		
 		TextView userPY = (TextView) convertView.findViewById(R.id.userPY);
 		userPY.setText(listData.get(positionId).get("py").toString());
-		
-		boolean checked = (Boolean) listData.get(positionId).get("checked");
-		state.put(positionId, checked);
 		
 		CheckBox check = (CheckBox) convertView.findViewById(R.id.checked);
 		check.setChecked(state.get(positionId));  
